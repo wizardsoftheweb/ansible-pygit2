@@ -9,3 +9,10 @@
 
 - include_tasks: virtualenv_install.yml
   when: force_rebuild or has_libgit2 | changed
+
+- name: "Install pygit2 to {{ venv_build_location }}"
+  environment:
+    LIBGIT2: "{{ venv_build_location }}"
+    LDFLAGS: "-WL,-rpath='$LIBGIT2/lib',--enable-new-dtags $LDFLAGS"
+  shell: ". {{ venv_build_location }}/bin/activate && {{ venv_build_location }}/bin/pip install pygit2"
+  notify: "Test pygit2"
