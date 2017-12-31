@@ -1,0 +1,20 @@
+{
+	"folders":
+	[
+		{
+			"path": "."
+		}
+	],
+    "build_systems": [
+        {
+            // "name": "1: test",
+            // "working_dir": "${project_path}",
+            // // "shell_cmd": "ansible-playbook -i vault.yml -vvvv test.yml",
+            // "windows": {
+            //     "shell_cmd": "bash -c 'ansible-playbook -i vault.yml -vvvv test.yml'",
+            // },
+            // "target": "ansi_color_build",
+            // "syntax": "Packages/ANSIescape/ANSI.tmLanguage"
+        }
+    ]
+}

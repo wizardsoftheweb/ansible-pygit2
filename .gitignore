@@ -1,0 +1,6 @@
+.vault_pass
+scratch*
+.retries
+vault.yml
+*.sublime-*
+!*.sublime-project
