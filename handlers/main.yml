@@ -1,8 +1,18 @@
 ---
 - name: Clean tmpdir
   file:
-    path: "{{ tmpdir.path }}"
-    state: "{{ 'absent' if always_clean_temp else omit }}"
-    force: "{{ 'yes' if always_clean_temp else omit }}"
-- name: Test pygit2
-  command: "{{ python_binary }} -c 'import pygit2'"
+    path: "{{ tmp_dir }}"
+    state: absent
+    force: yes
+  when: always_clean_temp
+
+- name: "Test pygit2"
+  environment:
+    LIBGIT2: "{{ build_location }}"
+    LD_LIBRARY_PATH: "$LIBGIT2/lib"
+  block:
+    - debug:
+        var: LIBGIT2
+    - debug:
+        var: LD_LIBRARY_PATH
+    - command: "{{ python_binary }} -c 'import pygit2'"
