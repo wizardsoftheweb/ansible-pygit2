@@ -21,7 +21,7 @@ install:
 
 script:
   # Check the role/playbook's syntax.
-  - ansible-playbook test-env.yml --syntax-check
+  - ansible-playbook test-venv.yml --syntax-check
   - ansible-playbook test-global.yml --syntax-check
 
   # Run the role/playbook with ansible-playbook.
