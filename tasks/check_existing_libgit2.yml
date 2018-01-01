@@ -5,3 +5,19 @@
   register: has_libgit2
   failed_when: no
   changed_when: "'libgit2' not in has_libgit2.stdout"
+
+- name: "Determine system linker"
+  command: getconf GNU_LIBC_VERSION
+  ignore_errors: yes
+  register: linker_type
+  failed_when: no
+
+- debug:
+    var: linker_type
+
+- name: "Assign linker global"
+  set_fact:
+    is_glibc: "{{ linker_type.stdout_lines|length and not linker_type.stderr_lines|length }}"
+
+- debug:
+    var: is_glibc
