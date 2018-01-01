@@ -2,7 +2,8 @@
 # System stuff
 owning_user: "{{ ansible_user }}"
 owning_group: "{{ ansible_user }}"
-root_dir: "/home/{{ ansible_user }}"
+root_dir: "{{ ansible_env.HOME }}"
+tmp_dir: "/tmp/libgit2"
 # libgit2 basics
 file_to_discover: "libgit2.so"
 libgit2_tar_release: "https://github.com/libgit2/libgit2/archive/v0.26.0.tar.gz"
@@ -13,4 +14,4 @@ global_build_location: "/usr/local"
 # Globals
 is_global_install: no
 force_rebuild: no
-always_clean_temp: yes
+always_clean_temp: no # yes
