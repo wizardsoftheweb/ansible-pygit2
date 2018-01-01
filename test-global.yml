@@ -1,0 +1,9 @@
+---
+- hosts: localhost
+  connection: local
+  become: true
+
+  tasks:
+    - include_role:
+        name: "{{ playbook_dir }}"
+        tasks_from: global_check.yml
