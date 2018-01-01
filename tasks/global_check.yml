@@ -21,3 +21,4 @@
 - name: "Configure the dynamic linker"
   shell: "ldconfig"
   become: yes
+  when: is_glibc
