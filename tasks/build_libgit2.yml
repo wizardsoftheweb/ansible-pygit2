@@ -1,15 +1,19 @@
 ---
-- name: "Create a temp location for the files"
-  tempfile:
+- name: "Ensure the temp location exists"
+  file:
+    path: "{{ tmp_dir }}"
     state: directory
-    suffix: build
-  register: tmpdir
   notify: "Clean tmpdir"
 
-- name: "Download and extract the library"
+- name: "Download the library"
+  get_url:
+    url: "{{ libgit2_tar_release }}"
+    dest: "{{ tmp_dir }}/archive.tar.gz"
+
+- name: "Extract the library"
   unarchive:
-    src: "{{ libgit2_tar_release }}"
-    dest: "{{ tmpdir.path }}"
+    src: "{{ tmp_dir }}/archive.tar.gz"
+    dest: "{{ tmp_dir }}"
     remote_src: yes
     extra_opts: [--strip-components=1]
 
@@ -18,15 +22,15 @@
     LIBGIT2: "{{ build_location }}"
   shell: 'cmake . -DCMAKE_INSTALL_PREFIX=$LIBGIT2'
   args:
-    chdir: "{{ tmpdir.path }}"
+    chdir: "{{ tmp_dir }}"
 
 - name: "Build the library"
   shell: make
   args:
-    chdir: "{{ tmpdir.path }}"
+    chdir: "{{ tmp_dir }}"
 
 - name: "Install the library"
   shell: make install
   args:
-    chdir: "{{ tmpdir.path }}"
+    chdir: "{{ tmp_dir }}"
   become: is_global_install
