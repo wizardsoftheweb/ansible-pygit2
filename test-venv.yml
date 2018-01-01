@@ -4,3 +4,4 @@
   become: true
   roles:
     - role: '{{ playbook_dir }}'
+      venv_build_location: "/tmp/venv"
