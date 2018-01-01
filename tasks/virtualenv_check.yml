@@ -25,14 +25,6 @@
     LIBGIT2: "{{ venv_build_location }}"
     LDFLAGS: "{{ '-WL,-rpath=\"$LIBGIT2/lib\",--enable-new-dtags $LDFLAGS' if is_glibc else omit }}"
     LD_LIBRARY_PATH: "{{ venv_build_location }}/lib"
-  block:
-  - debug:
-      var: LIBGIT2
-  - debug:
-      var: LDFLAGS
-  - debug:
-      var: LD_LIBRARY_PATH
-  - debug:
-      var: is_glibc
-  - shell: ". {{ venv_build_location }}/bin/activate && {{ venv_build_location }}/bin/pip install --no-cache pygit2"
-    notify: "Test pygit2"
+  shell: ". {{ venv_build_location }}/bin/activate && {{ venv_build_location }}/bin/pip install --no-cache pygit2"
+  notify: "Test pygit2"
+
