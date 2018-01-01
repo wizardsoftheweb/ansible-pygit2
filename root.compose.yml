@@ -1,0 +1,7 @@
+version: '2'
+
+services:
+  main:
+    container_name: ansible-pygit2-demo
+    build:
+      context: .
