@@ -10,6 +10,10 @@
 - include_tasks: global_install.yml
   when: force_rebuild or has_libgit2 | changed
 
+- name: "Configure the dynamic linker"
+  shell: "ldconfig"
+  become: yes
+  when: is_glibc
 
 - name: "Install pygit2"
   pip:
@@ -17,8 +21,3 @@
     state: latest
   notify: "Test pygit2"
   become: yes
-
-- name: "Configure the dynamic linker"
-  shell: "ldconfig"
-  become: yes
-  when: is_glibc
