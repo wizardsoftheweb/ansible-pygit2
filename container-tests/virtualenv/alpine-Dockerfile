@@ -1,0 +1,33 @@
+# TODO: tidy this up. Installation order is messy.
+
+FROM    alpine:3.7
+
+RUN     apk update
+
+RUN     apk add \
+            python python-dev \
+            py2-pip \
+            openssl openssl-dev \
+            libffi libffi-dev \
+            cmake \
+            make \
+            git \
+            tar \
+            gcc \
+            build-base \
+            abuild \
+            binutils
+
+RUN     pip install --upgrade \
+            pip \
+            virtualenv \
+            ansible \
+            cffi
+
+ADD     . /app
+
+RUN     cd /app \
+        && \
+        ansible-playbook test-venv.yml
+
+CMD     ["python"]
