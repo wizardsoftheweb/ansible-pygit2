@@ -20,11 +20,18 @@
 - include_tasks: virtualenv_install.yml
   when: force_rebuild or has_libgit2 | changed
 
-- name: "Install pygit2 to {{ venv_build_location }}"
+- name: "Install pygit2 to {{ venv_build_location }} without GLIBC flags"
   environment:
     LIBGIT2: "{{ venv_build_location }}"
-    LDFLAGS: "{{ '-WL,-rpath=\"$LIBGIT2/lib\",--enable-new-dtags $LDFLAGS' if is_glibc else omit }}"
     LD_LIBRARY_PATH: "{{ venv_build_location }}/lib"
   shell: ". {{ venv_build_location }}/bin/activate && {{ venv_build_location }}/bin/pip install --no-cache pygit2"
   notify: "Test pygit2"
+  when: not is_glibc
 
+- name: "Install pygit2 to {{ venv_build_location }} with GLIBC flags"
+  environment:
+    LIBGIT2: "{{ venv_build_location }}"
+    LDFLAGS: "-WL,-rpath='$LIBGIT2/lib',--enable-new-dtags $LDFLAGS"
+  shell: ". {{ venv_build_location }}/bin/activate && {{ venv_build_location }}/bin/pip install --no-cache pygit2"
+  notify: "Test pygit2"
+  when: is_glibc
