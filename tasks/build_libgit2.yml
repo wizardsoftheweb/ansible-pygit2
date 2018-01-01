@@ -1,5 +1,5 @@
 ---
-- name: "Ensure the temp location exists"
+- name: "Ensure the temp location {{ tmp_dir }} exists"
   file:
     path: "{{ tmp_dir }}"
     state: directory
@@ -17,7 +17,7 @@
     remote_src: yes
     extra_opts: [--strip-components=1]
 
-- name: "Set the libgit2 install prefix"
+- name: "Set the libgit2 install prefix to {{ build_location }}"
   environment:
     LIBGIT2: "{{ build_location }}"
   shell: 'cmake . -DCMAKE_INSTALL_PREFIX=$LIBGIT2'
