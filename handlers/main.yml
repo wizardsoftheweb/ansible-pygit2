@@ -10,9 +10,4 @@
   environment:
     LIBGIT2: "{{ build_location }}"
     LD_LIBRARY_PATH: "$LIBGIT2/lib"
-  block:
-    - debug:
-        var: LIBGIT2
-    - debug:
-        var: LD_LIBRARY_PATH
-    - command: "{{ python_binary }} -c 'import pygit2'"
+  command: "{{ python_binary }} -c 'import pygit2'"
